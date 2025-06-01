@@ -70,7 +70,7 @@ npm install
 
 3. Create a `.env` file:
 ```bash
-cp .env.example .env
+cp . .env
 ```
 
 4. Add your private key to `.env`:
