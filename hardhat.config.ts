@@ -1,8 +1,10 @@
 import { HardhatUserConfig } from "hardhat/config";
+import "@matterlabs/hardhat-zksync";
 import "@matterlabs/hardhat-zksync-solc";
 import "@matterlabs/hardhat-zksync-deploy";
-import "@matterlabs/hardhat-zksync-verify"
-// import "@nomiclabs/hardhat-ethers";;
+import "@matterlabs/hardhat-zksync-verify";
+import "@nomiclabs/hardhat-ethers";
+import "@nomicfoundation/hardhat-toolbox";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -62,10 +64,17 @@ const config: HardhatUserConfig = {
     },
   },
   zksolc: {
-    version: "latest",
+    version: "1.5.15",
     settings: {
+      // find all available options in the official documentation
+      // https://era.zksync.io/docs/tools/hardhat/hardhat-zksync-solc.html
       optimizer: {
         enabled: true,
+        runs: 200,
+      },
+      experimental: {
+        dockerImage: "matterlabs/zksolc",
+        tag: "latest",
       },
     },
   },
@@ -76,7 +85,6 @@ const config: HardhatUserConfig = {
         enabled: true,
         runs: 200,
       },
-      viaIR: true,  // Enable IR optimization
     },
   },
 };
