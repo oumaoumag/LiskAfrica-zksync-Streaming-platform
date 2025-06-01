@@ -1,10 +1,30 @@
 import { HardhatUserConfig } from "hardhat/config";
+import "@matterlabs/hardhat-zksync-solc";
+import "@matterlabs/hardhat-zksync-deploy";
+import "@matterlabs/hardhat-zksync-verify";
+import dotenv from "dotenv";
 
-import "@matterlabs/hardhat-zksync";
+dotenv.config();
 
 const config: HardhatUserConfig = {
   defaultNetwork: "zkSyncSepoliaTestnet",
   networks: {
+    // Lisk Sepolia Testnet
+    liskSepolia: {
+      url: process.env.RPC_URL || "https://rpc.sepolia-api.lisk.com",
+      ethNetwork: "sepolia",
+      zksync: false,
+      chainId: 4202,
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+    },
+    // Optimism Sepolia Testnet
+    optimismSepolia: {
+      url: "https://sepolia.optimism.io",
+      ethNetwork: "sepolia",
+      zksync: false,
+      chainId: 11155420,
+      accounts: process.env.WALLET_PRIVATE_KEY ? [process.env.WALLET_PRIVATE_KEY] : [],
+    },
     zkSyncSepoliaTestnet: {
       url: "https://sepolia.era.zksync.dev",
       ethNetwork: "sepolia",
@@ -40,12 +60,20 @@ const config: HardhatUserConfig = {
   zksolc: {
     version: "latest",
     settings: {
-      // find all available options in the official documentation
-      // https://era.zksync.io/docs/tools/hardhat/hardhat-zksync-solc.html#configuration
+      optimizer: {
+        enabled: true,
+      },
     },
   },
   solidity: {
-    version: "0.8.17",
+    version: "0.8.19",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200,
+      },
+      viaIR: true,  // Enable IR optimization
+    },
   },
 };
 
