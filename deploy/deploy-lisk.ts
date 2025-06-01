@@ -9,7 +9,7 @@ async function main() {
     console.log("Starting deployment to Lisk Sepolia...");
 
   // Get the deployer account (first account from Hardhat’s signer list)
-  const [deployer] = await hre.ethers.getSigners();
+  const [deployer] = await hre.getSigners();
   console.log("Deploying contracts with account:", deployer.address);
 
   // Check the deployer’s balance to ensure sufficient funds for deployment
